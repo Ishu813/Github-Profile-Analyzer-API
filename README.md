@@ -16,8 +16,6 @@ A Node.js + Express REST API that fetches public GitHub profile data, computes u
 | Feature | Detail |
 |---|---|
 | Analyze any GitHub user | `POST /analyze/:username` fetches the live profile + repos |
-| Derived metrics | Total stars, top 5 languages, top 5 repos by stars |
-| Idempotent upsert | Re-calling analyze refreshes stale data |
 | List all profiles | `GET /profiles` — newest first |
 | Fetch one profile | `GET /profiles/:username` |
 | Delete a profile | `DELETE /profiles/:username` |
@@ -45,7 +43,6 @@ cp .env.example .env
 | Variable | Required | Description |
 |---|---|---|
 | `DATABASE_URL` | Yes | MySQL connection string |
-| `GITHUB_TOKEN` | No | Personal access token — raises rate limit from 60 to 5 000 req/hr |
 | `PORT` | No | Defaults to `3000` |
 
 ### 3. Run
@@ -148,7 +145,3 @@ Key columns:
 | `username` | VARCHAR | Unique GitHub login |
 | `public_repos` | INT | Number of public repositories |
 | `followers` / `following` | INT | Social graph counts |
-| `total_stars` | INT | Cumulative stars across all repos |
-| `top_languages` | JSON | Up to 5 most-used languages |
-| `top_repos` | JSON | Up to 5 highest-starred repos |
-| `analyzed_at` | DATETIME | When the analysis was last run |
